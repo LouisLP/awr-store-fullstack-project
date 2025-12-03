@@ -21,7 +21,8 @@
     "quality": "npm run tsc:build && npm run biome:format && npm run biome:lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "seed": "tsx ./src/scripts/seed.ts"
   },
   "prisma": {
     "schema": "src/modules/prisma/schema.prisma"
