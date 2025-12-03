@@ -7,13 +7,13 @@ import {
   ApiOperation,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { CreateProductDto, ProductResponse } from './products.schema';
-import { ProductsService } from './products.service';
+import { type CreateProductDto, ProductResponse } from './products.schema';
+import type { ProductsService } from './products.service';
 
 @Controller('products')
 @ApiExtraModels(ProductResponse)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   @ApiOperation({
