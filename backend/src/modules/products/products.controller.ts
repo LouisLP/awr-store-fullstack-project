@@ -1,9 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
-
+/** biome-ignore-all lint/style/useImportType: <explanation> */
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiExtraModels,
+  ApiOkResponse,
   ApiOperation,
   getSchemaPath,
 } from '@nestjs/swagger';
@@ -13,7 +14,7 @@ import { ProductsService } from './products.service';
 @Controller('products')
 @ApiExtraModels(ProductResponse)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   @ApiOperation({
@@ -33,5 +34,22 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
   ): Promise<ProductResponse> {
     return await this.productsService.create(createProductDto);
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: 'Retrieves all Product resources.',
+  })
+  @ApiOkResponse({
+    description: 'Returned when products were retrieved successfully.',
+    schema: {
+      type: 'array',
+      items: {
+        $ref: getSchemaPath(ProductResponse),
+      },
+    },
+  })
+  async findAll(): Promise<ProductResponse[]> {
+    return await this.productsService.findMany();
   }
 }
