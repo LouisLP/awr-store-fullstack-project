@@ -2,6 +2,7 @@ import { Mocked, TestBed } from '@suites/unit';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { CreateProductDto } from './products.schema';
 import { ProductsService } from './products.service';
+import { Prisma } from 'src/common/generated/prisma-client';
 
 describe('Product Service Unit Tests', () => {
   let productService: ProductsService;
@@ -32,6 +33,7 @@ describe('Product Service Unit Tests', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
         ...createdProductData,
+        price: new Prisma.Decimal(createdProductData.price),
       });
 
       const result = await productService.create(createdProductData);
