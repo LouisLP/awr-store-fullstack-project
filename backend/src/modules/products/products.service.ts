@@ -1,7 +1,8 @@
+/** biome-ignore-all lint/style/useImportType: <explanation> */
 import { Injectable } from '@nestjs/common';
-import type { PrismaService } from 'src/modules/prisma/prisma.service';
-import type { Product } from 'src/common/generated/prisma-client';
-import type { CreateProductDto } from './products.schema';
+import { PrismaService } from 'src/modules/prisma/prisma.service';
+import { Product } from 'src/common/generated/prisma-client';
+import { CreateProductDto } from './products.schema';
 
 @Injectable()
 export class ProductsService {

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useImportType: <explanation> */
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -7,8 +8,8 @@ import {
   ApiOperation,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { type CreateProductDto, ProductResponse } from './products.schema';
-import type { ProductsService } from './products.service';
+import { CreateProductDto, ProductResponse } from './products.schema';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 @ApiExtraModels(ProductResponse)
