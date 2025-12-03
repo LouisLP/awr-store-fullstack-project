@@ -72,7 +72,7 @@ const testProducts = [
   {
     name: 'Ring of Wealth',
     description:
-      'A stylish ring rumored to improve one\'s luck during day-to-day adventures.',
+      "A stylish ring rumored to improve one's luck during day-to-day adventures.",
     price: 199.99,
     availableCount: rand(5, 16),
   },
