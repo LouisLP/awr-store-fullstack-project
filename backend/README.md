@@ -27,6 +27,12 @@ Run the migrations:
 npm run prisma:migrate:dev
 ```
 
+Seed the DB with some products:
+
+```sh
+npm run seed
+```
+
 Start the dev server:
 
 ```sh
