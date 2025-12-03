@@ -37,7 +37,9 @@ export class OrdersService {
       }
 
       // 3. Map for easy lookup
-      const productMap = new Map(products.map((product) => [product.id, product]));
+      const productMap = new Map(
+        products.map((product) => [product.id, product]),
+      );
 
       // Validate inventory availability
       for (const orderProduct of createOrderDto.products) {
