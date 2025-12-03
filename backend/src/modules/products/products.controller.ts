@@ -1,9 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
-
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiExtraModels,
+  ApiOkResponse,
   ApiOperation,
   getSchemaPath,
 } from '@nestjs/swagger';
@@ -33,5 +33,22 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
   ): Promise<ProductResponse> {
     return await this.productsService.create(createProductDto);
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: 'Retrieves all Product resources.',
+  })
+  @ApiOkResponse({
+    description: 'Returned when products were retrieved successfully.',
+    schema: {
+      type: 'array',
+      items: {
+        $ref: getSchemaPath(ProductResponse),
+      },
+    },
+  })
+  async findAll(): Promise<ProductResponse[]> {
+    return await this.productsService.findMany();
   }
 }
