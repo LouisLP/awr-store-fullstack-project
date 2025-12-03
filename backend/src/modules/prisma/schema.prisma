@@ -23,6 +23,8 @@ model Product {
   availableCount Int
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+
+  orderItems     OrderItem[]
 }
 
 model Order {
