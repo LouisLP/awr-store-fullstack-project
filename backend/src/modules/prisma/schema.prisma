@@ -19,10 +19,41 @@ model Product {
   id             Int       @id @default(autoincrement())
   name           String
   description    String
-  price          Float
+  price          Decimal   @db.Decimal(10, 2)
   availableCount Int
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+
+  orderItems     OrderItem[]
+}
+
+model Order {
+  id                String      @id @default(uuid()) @db.Uuid
+  customerId        String      @db.Uuid
+  orderTotal        Decimal     @db.Decimal(10, 2)
+  status            OrderStatus @default(DISPATCHED)
+  orderCreatedDate  DateTime    @default(now())
+  orderUpdatedDate  DateTime    @updatedAt
+  orderItems        OrderItem[]
+}
+
+enum OrderStatus {
+  PENDING
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   String  @db.Uuid
+  productId Int
+  quantity  Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId])
 }
 
 

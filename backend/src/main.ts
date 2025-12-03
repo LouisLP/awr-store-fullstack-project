@@ -20,6 +20,12 @@ async function bootstrap() {
     new FastifyAdapter(fastify()),
   );
 
+  // CORS for soon-to-be frontend
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
+
   const swaggerConfig = new DocumentBuilder()
     .setTitle(packageJson.name)
     .build();

@@ -14,7 +14,7 @@ import { ProductsService } from './products.service';
 @Controller('products')
 @ApiExtraModels(ProductResponse)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(private readonly productsService: ProductsService) {}
 
   @Post()
   @ApiOperation({
@@ -33,7 +33,16 @@ export class ProductsController {
   async create(
     @Body() createProductDto: CreateProductDto,
   ): Promise<ProductResponse> {
-    return await this.productsService.create(createProductDto);
+    const product = await this.productsService.create(createProductDto);
+    return {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: Number(product.price),
+      availableCount: product.availableCount,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+    };
   }
 
   @Get()
@@ -50,6 +59,15 @@ export class ProductsController {
     },
   })
   async findAll(): Promise<ProductResponse[]> {
-    return await this.productsService.findMany();
+    const products = await this.productsService.findMany();
+    return products.map((product) => ({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: Number(product.price),
+      availableCount: product.availableCount,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+    }));
   }
 }

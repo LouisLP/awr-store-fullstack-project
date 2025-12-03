@@ -6,7 +6,7 @@ import { CreateProductDto } from './products.schema';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const created = await this.prisma.product.create({
@@ -25,16 +25,16 @@ export class ProductsService {
 
   // May be implemented
   // @ts-ignore
-  async findOne(): Promise<Product> { }
+  async findOne(): Promise<Product> {}
 
   // May be implemented
   // @ts-ignore
-  async updateOne(): Promise<Product> { }
+  async updateOne(): Promise<Product> {}
 
   // May be implemented.
   // Note: This operation returns a promise of GenericOperationResponse
   // which contains a flag that denotes whether or not the operation
   // was successful.
   //@ts-ignore
-  async deleteOne(): Promise<GenericOperationResponse> { }
+  async deleteOne(): Promise<GenericOperationResponse> {}
 }
