@@ -29,14 +29,8 @@ export const OrderProductDetailSchema = z.object({
 export const OrderResponseSchema = z.object({
   id: z.string().uuid().describe('Unique order identifier'),
   customerId: z.string().uuid().describe('Customer identifier'),
-  orderCreatedDate: z
-    .string()
-    .pipe(z.coerce.date())
-    .describe('Order creation timestamp'),
-  orderUpdatedDate: z
-    .string()
-    .pipe(z.coerce.date())
-    .describe('Order last updated timestamp'),
+  orderCreatedDate: z.string().describe('Order creation timestamp'),
+  orderUpdatedDate: z.string().describe('Order last updated timestamp'),
   status: z
     .enum(['PENDING', 'DISPATCHED', 'DELIVERED', 'CANCELLED'])
     .describe('Order status'),
