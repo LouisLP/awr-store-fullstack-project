@@ -1,4 +1,6 @@
 <script setup>
+import { RouterView } from 'vue-router'
+
 import Footer from '@/components/ui/BaseFooter.vue'
 import Navbar from '@/components/ui/BaseNavbar.vue'
 </script>
