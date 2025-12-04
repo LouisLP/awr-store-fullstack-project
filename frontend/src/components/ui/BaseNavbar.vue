@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+
+import { useCartStore } from '@/stores/cart'
+
+const cartStore = useCartStore()
 </script>
 
 <template>
@@ -20,7 +24,7 @@ import { Icon } from '@iconify/vue'
       <RouterLink to="/" class="btn btn-ghost">
         <Icon icon="mdi:cart" class="size-6 text-white" />
         <div class="indicator-item ml-1">
-          7 items
+          {{ cartStore.items.length }}
         </div>
       </RouterLink>
     </div>
