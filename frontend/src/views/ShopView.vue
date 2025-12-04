@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
+import ProductCard from '@/components/products/ProductCard.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import { useProducts } from '@/composables/useProducts'
 
@@ -32,13 +33,12 @@ onMounted(() => {
 
       <!-- Products Grid -->
       <div v-else-if="products.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <!-- TODO: implement card -->
-        <!-- <ProductCard
+        <ProductCard
           v-for="product in products"
           :key="product.id"
           :product="product"
           @add-to-cart="console.log('Add to cart:', product.id)"
-        /> -->
+        />
       </div>
 
       <!-- Empty State -->
