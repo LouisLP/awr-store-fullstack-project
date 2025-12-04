@@ -69,7 +69,7 @@ const emit = defineEmits<{
       <!-- Item total -->
       <div class="flex justify-between items-center mt-4 pt-4 border-t border-base-content/10">
         <span class="text-sm text-base-content/70">Item total:</span>
-        <div class="text-xl font-bold text-secondary">
+        <div class="text-xl font-bold text-primary">
           €{{ (item.product.price * item.quantity).toFixed(2) }}
         </div>
       </div>
