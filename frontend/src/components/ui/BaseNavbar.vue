@@ -6,7 +6,7 @@ import { Icon } from '@iconify/vue'
   <div class="navbar bg-neutral shadow-sm">
     <div class="flex-1">
       <RouterLink to="/" class="btn btn-ghost text-xl">
-        Template
+        Aware Shop
       </RouterLink>
     </div>
 
