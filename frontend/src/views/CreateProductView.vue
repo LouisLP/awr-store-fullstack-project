@@ -38,60 +38,54 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="mt-12">
-    <!-- Main Content -->
-    <div class="container mx-auto px-4 py-8">
-      <div class="max-w-2xl mx-auto">
-        <h1 class="text-4xl font-bold mb-8">
-          Create New Product
-        </h1>
+  <div class="container mx-auto px-4 py-8 mt-12">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-4xl font-bold mb-8">
+        Create New Product
+      </h1>
 
-        <div v-if="error" class="alert alert-error mb-6">
-          <span>{{ error }}</span>
-        </div>
+      <div v-if="error" class="alert alert-error mb-6">
+        <span>{{ error }}</span>
+      </div>
 
-        <form class="card bg-base-100 shadow-xl" @submit="onSubmit">
-          <div class="card-body space-y-6">
+      <form class="card bg-black/30" @submit="onSubmit">
+        <div class="card-body space-y-4">
+          <!-- Fieldset (thanks DaisyUI) -->
+          <fieldset class="fieldset border border-secondary rounded-box p-6 space-y-6">
+            <legend class="font-bold text-lg">
+              Product Details
+            </legend>
+
             <!-- Name -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-semibold">Product Name</span>
-              </label>
+            <div class="form-control space-y-2">
+              <label class="label font-semibold">Product Name</label>
               <input
                 v-model="name"
                 v-bind="nameAttrs"
                 type="text"
                 placeholder="Enter product name"
-                class="input input-bordered"
+                class="input input-bordered w-full"
                 :class="{ 'input-error': errors.name }"
               >
-              <label v-if="errors.name" class="label">
-                <span class="label-text-alt text-error">{{ errors.name }}</span>
-              </label>
+              <span v-if="errors.name" class="text-error text-sm">{{ errors.name }}</span>
             </div>
 
             <!-- Description -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-semibold">Description</span>
-              </label>
+            <div class="form-control space-y-2">
+              <label class="label font-semibold">Description</label>
               <textarea
                 v-model="description"
                 v-bind="descriptionAttrs"
                 placeholder="Enter product description"
-                class="textarea textarea-bordered h-24"
+                class="textarea textarea-bordered w-full h-24"
                 :class="{ 'textarea-error': errors.description }"
               />
-              <label v-if="errors.description" class="label">
-                <span class="label-text-alt text-error">{{ errors.description }}</span>
-              </label>
+              <span v-if="errors.description" class="text-error text-sm">{{ errors.description }}</span>
             </div>
 
             <!-- Price -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-semibold">Price (€)</span>
-              </label>
+            <div class="form-control space-y-2">
+              <label class="label font-semibold">Price (€)</label>
               <input
                 v-model.number="price"
                 v-bind="priceAttrs"
@@ -99,55 +93,48 @@ const onSubmit = handleSubmit(async (values) => {
                 step="0.01"
                 min="0"
                 placeholder="0.00"
-                class="input input-bordered"
+                class="input input-bordered w-full"
                 :class="{ 'input-error': errors.price }"
               >
-              <label v-if="errors.price" class="label">
-                <span class="label-text-alt text-error">{{ errors.price }}</span>
-              </label>
+              <span v-if="errors.price" class="text-error text-sm">{{ errors.price }}</span>
             </div>
 
             <!-- Available Count -->
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-semibold">Available Count</span>
-              </label>
+            <div class="form-control space-y-2">
+              <label class="label font-semibold">Available Count</label>
               <input
                 v-model.number="availableCount"
                 v-bind="availableCountAttrs"
                 type="number"
                 min="0"
                 placeholder="0"
-                class="input input-bordered"
+                class="input input-bordered w-full"
                 :class="{ 'input-error': errors.availableCount }"
               >
-              <label v-if="errors.availableCount" class="label">
-                <span class="label-text-alt text-error">{{ errors.availableCount }}</span>
-              </label>
+              <span v-if="errors.availableCount" class="text-error text-sm">{{ errors.availableCount }}</span>
             </div>
+          </fieldset>
 
-            <!-- Actions -->
-            <div class="card-actions justify-end gap-2 pt-4">
-              <button
-                type="button"
-                class="btn btn-ghost"
-                @click="router.push('/admin')"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="btn btn-primary"
-                :disabled="loading"
-              >
-                <span v-if="loading" class="loading loading-spinner" />
-                <Icon v-else icon="mdi:content-save" class="size-4" />
-                {{ loading ? 'Creating...' : 'Create Product' }}
-              </button>
-            </div>
+          <div class="card-actions justify-end pt-4">
+            <RouterLink
+              to="/admin"
+              class="btn btn-ghost"
+            >
+              Cancel
+            </RouterLink>
+
+            <button
+              type="submit"
+              class="btn btn-neutral"
+              :disabled="loading"
+            >
+              <span v-if="loading" class="loading loading-spinner" />
+              <Icon v-else icon="mdi:content-save" class="size-4" />
+              {{ loading ? 'Creating...' : 'Create Product' }}
+            </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
