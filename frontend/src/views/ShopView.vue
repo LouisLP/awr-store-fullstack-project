@@ -4,8 +4,10 @@ import { onMounted } from 'vue'
 import ProductCard from '@/components/products/ProductCard.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import { useProducts } from '@/composables/useProducts'
+import { useCartStore } from '@/stores/cart'
 
 const { products, loading, error, fetchProducts } = useProducts()
+const cartStore = useCartStore()
 
 onMounted(() => {
   fetchProducts()
@@ -35,7 +37,7 @@ onMounted(() => {
         v-for="product in products"
         :key="product.id"
         :product="product"
-        @add-to-cart="console.log('Add to cart:', product.id)"
+        @add-to-cart="cartStore.addToCart(product)"
       />
     </div>
 
