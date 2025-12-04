@@ -13,7 +13,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="card bg-black/30 shadow-xl hover:shadow-2xl hover:ring-2 ring-primary transition-all">
+  <div class="card bg-black/30 shadow-xl hover:shadow-2xl hover:ring-2 ring-secondary transition-all">
     <div class="card-body">
       <h2 class="card-title">
         {{ product.name }}
