@@ -34,7 +34,7 @@ defineProps<{
           <td>
             <span
               class="badge"
-              :class="product.availableCount > 0 ? 'badge-success' : 'badge-error'"
+              :class="product.availableCount > 0 ? 'badge-secondary' : 'badge-error'"
             >
               {{ product.availableCount }}
             </span>

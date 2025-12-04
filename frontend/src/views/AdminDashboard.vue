@@ -16,10 +16,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8 mt-12">
     <div class="flex justify-between items-center mb-8">
       <h1 class="text-4xl font-bold">
-        Product Management
+        Admin Dashboard
       </h1>
       <button
         class="btn btn-neutral btn-lg"

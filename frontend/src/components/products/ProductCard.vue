@@ -28,7 +28,12 @@ const emit = defineEmits<{
             €{{ product.price.toFixed(2) }}
           </div>
           <div class="text-xs text-base-content/60">
-            {{ product.availableCount }} in stock
+            <span
+              class="badge"
+              :class="product.availableCount > 0 ? 'badge-secondary' : 'badge-error'"
+            >
+              {{ product.availableCount }} in stock
+            </span>
           </div>
         </div>
       </div>
