@@ -1,6 +1,6 @@
 import type { CreateProductDto, Product } from '@/types/product'
 
-import apiClient from './client'
+import apiClient from '@/api/client'
 
 export const productsApi = {
   async getAll(): Promise<Product[]> {
