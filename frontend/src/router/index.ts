@@ -3,7 +3,7 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import AdminDashboard from '@/views/AdminDashboard.vue'
 import CartView from '@/views/CartView.vue'
 import CreateProductView from '@/views/CreateProductView.vue'
-// import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
+import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
 import ShopView from '@/views/ShopView.vue'
 
 const router = createRouter({
@@ -29,11 +29,11 @@ const router = createRouter({
       name: 'cart',
       component: CartView,
     },
-    // {
-    //   path: '/orders/:id',
-    //   name: 'order-confirmation',
-    //   component: OrderConfirmationView,
-    // },
+    {
+      path: '/orders/:id',
+      name: 'order-confirmation',
+      component: OrderConfirmationView,
+    },
   ],
 })
 
