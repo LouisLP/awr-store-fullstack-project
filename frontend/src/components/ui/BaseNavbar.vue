@@ -24,7 +24,7 @@ const cartStore = useCartStore()
       <RouterLink to="/" class="btn btn-ghost">
         <Icon icon="mdi:cart" class="size-6 text-white" />
         <div class="indicator-item ml-1">
-          {{ cartStore.items.length }}
+          {{ cartStore.cartCount }}
         </div>
       </RouterLink>
     </div>
