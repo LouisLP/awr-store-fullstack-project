@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { useRouter } from 'vue-router'
+
+import type { CreateOrderDto } from '@/types/order'
 
 import CartItem from '@/components/cart/CartItem.vue'
+import { useOrders } from '@/composables/useOrders'
 import { useCartStore } from '@/stores/cart'
 
 const cartStore = useCartStore()
+const { createOrder } = useOrders()
+
+const router = useRouter()
 
 function updateQuantity(productId: number, quantity: number) {
   cartStore.updateQuantity(productId, quantity)
@@ -16,6 +23,31 @@ function removeFromCart(productId: number) {
 
 function clearCart() {
   cartStore.clearCart()
+}
+
+async function handleCheckout() {
+  if (cartStore.isEmpty)
+    return
+
+  const HARD_CODED_CUSTOMER_ID = '7545afc6-c1eb-497a-9a44-4e6ba595b4ab' // Same hard-coded value from instructions
+
+  const orderData: CreateOrderDto = {
+    customerId: HARD_CODED_CUSTOMER_ID,
+    products: cartStore.items.map(item => ({
+      id: item.product.id,
+      quantity: item.quantity,
+    })),
+  }
+
+  try {
+    const order = await createOrder(orderData)
+    cartStore.clearCart()
+    router.push(`/orders/${order.id}`)
+  }
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  catch (e) {
+    // Error is handled in composable
+  }
 }
 </script>
 
@@ -77,10 +109,10 @@ function clearCart() {
           </div>
 
           <div class="card-actions justify-end mt-6">
-            <RouterLink to="/checkout" class="btn btn-neutral btn-lg w-full">
+            <button class="btn btn-neutral btn-lg w-full" @click="handleCheckout()">
               <Icon icon="mdi:credit-card" class="size-5" />
               Proceed to Checkout
-            </RouterLink>
+            </button>
           </div>
         </div>
       </div>
