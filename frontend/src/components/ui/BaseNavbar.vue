@@ -11,14 +11,18 @@ import { Icon } from '@iconify/vue'
     </div>
 
     <div class="flex-none">
-      <!-- Cart -->
-      <button tabindex="0" role="button" class="btn btn-ghost">
+      <RouterLink to="/admin" class="btn btn-ghost">
+        Admin
+      </RouterLink>
+
+      <!-- Cart button -->
+      <!-- TODO: route to /cart -->
+      <RouterLink to="/" class="btn btn-ghost">
         <Icon icon="mdi:cart" class="size-6 text-white" />
-        <!-- TODO: num of cart items -->
         <div class="indicator-item ml-1">
           7 items
         </div>
-      </button>
+      </RouterLink>
     </div>
   </div>
 </template>
