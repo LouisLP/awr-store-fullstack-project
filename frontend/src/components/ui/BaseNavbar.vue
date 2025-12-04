@@ -20,8 +20,7 @@ const cartStore = useCartStore()
       </RouterLink>
 
       <!-- Cart button -->
-      <!-- TODO: route to /cart -->
-      <RouterLink to="/" class="btn btn-ghost">
+      <RouterLink to="/cart" class="btn btn-ghost">
         <Icon icon="mdi:cart" class="size-6 text-white" />
         <div class="indicator-item ml-1">
           {{ cartStore.cartCount }}
