@@ -7,7 +7,6 @@ import type { Product } from '@/types/product'
 export const useCartStore = defineStore('cart', () => {
   // State
   const items = ref<CartItem[]>([])
-  const isOpen = ref(false)
 
   // Getters
   const cartCount = computed(() =>
@@ -58,7 +57,6 @@ export const useCartStore = defineStore('cart', () => {
   return {
     // State
     items,
-    isOpen,
     // Getters
     cartCount,
     cartTotal,
