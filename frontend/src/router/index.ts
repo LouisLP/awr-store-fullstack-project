@@ -1,14 +1,34 @@
-// import { createMemoryHistory, createRouter } from 'vue-router'
+import { createMemoryHistory, createRouter } from 'vue-router'
 
-// import DashboardView from './DashboardView.vue'
-// import HomeView from './HomeView.vue'
+// import AdminDashboard from '@/views/AdminDashboard.vue'
+// import CreateProductView from '@/views/CreateProductView.vue'
+// import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
+import ShopView from '@/views/ShopView.vue'
 
-// const routes = [
-//   { path: '/', component: HomeView },
-//   { path: '/dashboard', component: DashboardView },
-// ]
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'shop',
+      component: ShopView,
+    },
+    // {
+    //   path: '/admin',
+    //   name: 'admin',
+    //   component: AdminDashboard,
+    // },
+    // {
+    //   path: '/admin/new',
+    //   name: 'create-product',
+    //   component: CreateProductView,
+    // },
+    // {
+    //   path: '/orders/:id',
+    //   name: 'order-confirmation',
+    //   component: OrderConfirmationView,
+    // },
+  ],
+})
 
-// export const router = createRouter({
-//   history: createMemoryHistory(),
-//   routes,
-// })
+export default router
