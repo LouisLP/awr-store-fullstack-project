@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 
 import ProductTable from '@/components/products/ProductTable.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import { useProducts } from '@/composables/useProducts'
 
-const router = useRouter()
 const { products, loading, error, fetchProducts } = useProducts()
 
 onMounted(() => {
@@ -21,13 +19,13 @@ onMounted(() => {
       <h1 class="text-4xl font-bold">
         Admin Dashboard
       </h1>
-      <button
+      <RouterLink
+        to="/admin/new"
         class="btn btn-neutral btn-lg"
-        @click="router.push('/admin/new')"
       >
         <Icon icon="mdi:plus" class="size-6" />
         Create New Product
-      </button>
+      </RouterLink>
     </div>
 
     <!-- Loading State -->
