@@ -52,7 +52,7 @@ const emit = defineEmits<{
             <Icon icon="mdi:minus" class="size-4" />
           </button>
 
-          <div class="badge badge-neutral font-bold px-3">
+          <div class="badge badge-neutral font-bold px-3 select-none">
             {{ item.quantity }}
           </div>
 
