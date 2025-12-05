@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+import tailwind from 'eslint-plugin-tailwindcss'
 
 export default antfu({
   type: 'app',
@@ -10,7 +11,7 @@ export default antfu({
     semi: false,
     quotes: 'single',
   },
-}, {
+}, ...tailwind.configs['flat/recommended'], {
   rules: {
     'ts/no-redeclare': 'off',
     'ts/consistent-type-definitions': ['error', 'type'],
@@ -21,5 +22,6 @@ export default antfu({
     'perfectionist/sort-imports': ['error', {
       tsconfigRootDir: '.',
     }],
+    'tailwindcss/no-custom-classname': 'off',
   },
 })

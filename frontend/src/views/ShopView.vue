@@ -15,8 +15,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8 mt-12">
-    <h1 class="text-4xl font-bold mb-8">
+  <div class="container mx-auto mt-12 px-4 py-8">
+    <h1 class="mb-8 text-4xl font-bold">
       Browse Products
     </h1>
 
@@ -32,7 +32,7 @@ onMounted(() => {
     </div>
 
     <!-- Products Grid -->
-    <div v-else-if="products.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div v-else-if="products.length > 0" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <ProductCard
         v-for="product in products"
         :key="product.id"

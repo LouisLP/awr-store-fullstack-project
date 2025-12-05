@@ -17,8 +17,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8 mt-12">
-    <div class="max-w-md mx-auto space-y-8">
+  <div class="container mx-auto mt-12 px-4 py-8">
+    <div class="mx-auto max-w-md space-y-8">
       <!-- Loading State -->
       <LoadingSpinner v-if="loading" />
 
@@ -35,17 +35,17 @@ onMounted(() => {
         <div class="card bg-black/30 shadow-xl">
           <div class="card-body px-6 py-8">
             <!-- Success Icon -->
-            <div class="flex justify-center mb-2">
-              <div class="rounded-full bg-success/20 p-1">
+            <div class="mb-2 flex justify-center">
+              <div class="bg-success/20 rounded-full p-1">
                 <Icon icon="mdi:check-circle" class="text-success size-6" />
               </div>
             </div>
 
             <!-- Title -->
-            <h2 class="text-3xl font-bold text-center">
+            <h2 class="text-center text-3xl font-bold">
               Order Placed!
             </h2>
-            <p class="text-center text-base-content/60">
+            <p class="text-base-content/60 text-center">
               <span class="font-mono text-sm">{{ order.id }}</span>
             </p>
 
@@ -54,15 +54,15 @@ onMounted(() => {
             <!-- Order Info Grid -->
             <div class="grid grid-cols-2 gap-6">
               <div class="text-center">
-                <div class="text-sm text-base-content/60">
+                <div class="text-base-content/60 text-sm">
                   Order Date
                 </div>
-                <div class="font-semibold text-lg">
+                <div class="text-lg font-semibold">
                   {{ new Date(order.orderCreatedDate).toLocaleDateString() }}
                 </div>
               </div>
               <div class="text-center">
-                <div class="text-sm text-base-content/60">
+                <div class="text-base-content/60 text-sm">
                   Status
                 </div>
                 <div class="badge badge-success badge-lg">
@@ -72,8 +72,8 @@ onMounted(() => {
             </div>
 
             <!-- Customer ID -->
-            <div class="text-center mt-3">
-              <div class="text-xs text-base-content/40">
+            <div class="mt-3 text-center">
+              <div class="text-base-content/40 text-xs">
                 Customer: <span class="font-mono">{{ order.customerId }}</span>
               </div>
             </div>
@@ -82,7 +82,7 @@ onMounted(() => {
 
             <!-- Order Items -->
             <div>
-              <h3 class="flex items-center justify-center gap-2 text-xl font-semibold mb-4">
+              <h3 class="mb-4 flex items-center justify-center gap-2 text-xl font-semibold">
                 <Icon icon="mdi:package" class="size-6" />
                 Items Ordered
               </h3>
@@ -90,13 +90,13 @@ onMounted(() => {
                 <div
                   v-for="product in order.products"
                   :key="product.id"
-                  class="flex justify-between items-center p-4 bg-black/50 rounded-lg"
+                  class="flex items-center justify-between rounded-lg bg-black/50 p-4"
                 >
                   <div>
                     <div class="font-semibold">
                       {{ product.name }}
                     </div>
-                    <div class="text-sm text-base-content/60">
+                    <div class="text-base-content/60 text-sm">
                       Qty: {{ product.quantity }}
                     </div>
                   </div>
@@ -105,12 +105,12 @@ onMounted(() => {
             </div>
 
             <!-- Dashed separator for tear-off-kinda effect -->
-            <div class="border-t-2 border-dashed border-base-content/30 -mx-8 my-6" />
+            <div class="border-base-content/30 -mx-8 my-6 border-t-2 border-dashed" />
 
             <!-- Total -->
-            <div class="flex justify-between items-center px-4 mb-6">
+            <div class="mb-6 flex items-center justify-between px-4">
               <span class="text-xl font-semibold">Total:</span>
-              <span class="text-2xl font-bold text-primary">
+              <span class="text-primary text-2xl font-bold">
                 €{{ order.orderTotal.toFixed(2) }}
               </span>
             </div>

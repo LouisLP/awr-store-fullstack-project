@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div class="overflow-x-auto">
-    <table class="table table-zebra">
+    <table class="table-zebra table">
       <thead>
         <tr>
           <th>ID</th>
@@ -28,7 +28,7 @@ defineProps<{
           <td class="max-w-md truncate">
             {{ product.description }}
           </td>
-          <td class="font-bold text-primary">
+          <td class="text-primary font-bold">
             €{{ product.price.toFixed(2) }}
           </td>
           <td>
@@ -39,7 +39,7 @@ defineProps<{
               {{ product.availableCount }}
             </span>
           </td>
-          <td class="text-sm text-base-content/60">
+          <td class="text-base-content/60 text-sm">
             {{ new Date(product.createdAt).toLocaleDateString() }}
           </td>
         </tr>

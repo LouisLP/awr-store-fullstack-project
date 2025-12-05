@@ -52,8 +52,8 @@ async function handleCheckout() {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8 mt-12 min-h-screen">
-    <div class="flex justify-between items-center mb-8">
+  <div class="container mx-auto mt-12 min-h-screen px-4 py-8">
+    <div class="mb-8 flex items-center justify-between">
       <h1 class="text-4xl font-bold">
         Shopping Cart
       </h1>
@@ -72,7 +72,7 @@ async function handleCheckout() {
     <!-- Cart items -->
     <div v-if="!cartStore.isEmpty" class="space-y-6">
       <!-- Cart items grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <CartItem
           v-for="item in cartStore.items"
           :key="item.product.id"
@@ -83,32 +83,32 @@ async function handleCheckout() {
       </div>
 
       <!-- Cart summary -->
-      <div class="card bg-black/30 shadow-xl mt-8">
+      <div class="card mt-8 bg-black/30 shadow-xl">
         <div class="card-body">
-          <h2 class="card-title text-2xl mb-4">
+          <h2 class="card-title mb-4 text-2xl">
             Order Summary
           </h2>
 
           <div class="space-y-2">
-            <div class="flex justify-between text-base-content/70">
+            <div class="text-base-content/70 flex justify-between">
               <span>Items ({{ cartStore.cartCount }}):</span>
               <span>€{{ cartStore.cartTotal.toFixed(2) }}</span>
             </div>
 
-            <div class="flex justify-between text-base-content/70">
+            <div class="text-base-content/70 flex justify-between">
               <span>Shipping:</span>
               <span class="text-accent">Free for Aware employees</span>
             </div>
 
             <div class="divider my-2" />
 
-            <div class="flex justify-between text-xl font-bold text-primary">
+            <div class="text-primary flex justify-between text-xl font-bold">
               <span class="text-white">Total:</span>
               <span class="tracking-wide">€{{ cartStore.cartTotal.toFixed(2) }}</span>
             </div>
           </div>
 
-          <div class="card-actions justify-end mt-6">
+          <div class="card-actions mt-6 justify-end">
             <button class="btn btn-neutral btn-lg w-full" @click="handleCheckout()">
               <Icon icon="mdi:credit-card" class="size-5" />
               Place Order
@@ -120,9 +120,9 @@ async function handleCheckout() {
 
     <!-- Empty State -->
     <div v-else class="flex flex-col items-center justify-center py-16">
-      <div class="card bg-black/30 shadow-md max-w-lg">
+      <div class="card max-w-lg bg-black/30 shadow-md">
         <div class="card-body text-center">
-          <Icon icon="mdi:cart-outline" class="size-24 mx-auto text-base-content/30 mb-4" />
+          <Icon icon="mdi:cart-outline" class="text-base-content/30 mx-auto mb-4 size-24" />
           <h2 class="card-title justify-center text-2xl">
             Your cart is empty
           </h2>
