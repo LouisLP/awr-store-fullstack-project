@@ -1,20 +1,35 @@
-/** biome-ignore-all lint/style/useImportType: <explanation> */
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiExtraModels,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { CreateProductDto, ProductResponse } from './products.schema';
+import {
+  CreateProductDto,
+  ProductResponse,
+  UpdateProductDto,
+} from './products.schema';
 import { ProductsService } from './products.service';
+import { GenericOperationResponse } from 'src/common/schemas/generic-operation-response.schema';
 
 @Controller('products')
-@ApiExtraModels(ProductResponse)
+@ApiExtraModels(ProductResponse, GenericOperationResponse)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   @ApiOperation({
@@ -33,16 +48,7 @@ export class ProductsController {
   async create(
     @Body() createProductDto: CreateProductDto,
   ): Promise<ProductResponse> {
-    const product = await this.productsService.create(createProductDto);
-    return {
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      price: Number(product.price),
-      availableCount: product.availableCount,
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-    };
+    return await this.productsService.create(createProductDto);
   }
 
   @Get()
@@ -59,15 +65,82 @@ export class ProductsController {
     },
   })
   async findAll(): Promise<ProductResponse[]> {
-    const products = await this.productsService.findMany();
-    return products.map((product) => ({
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      price: Number(product.price),
-      availableCount: product.availableCount,
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-    }));
+    return await this.productsService.findMany();
+  }
+
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Retrieves a single Product resource by ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Product ID',
+    type: 'number',
+  })
+  @ApiOkResponse({
+    description: 'Returned when the product was found.',
+    schema: {
+      $ref: getSchemaPath(ProductResponse),
+    },
+  })
+  @ApiNotFoundResponse({
+    description: 'Returned when the product was not found.',
+  })
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ProductResponse> {
+    return await this.productsService.findOne(id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Updates a Product resource.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Product ID',
+    type: 'number',
+  })
+  @ApiOkResponse({
+    description: 'Returned when the product was updated successfully.',
+    schema: {
+      $ref: getSchemaPath(ProductResponse),
+    },
+  })
+  @ApiNotFoundResponse({
+    description: 'Returned when the product was not found.',
+  })
+  @ApiBadRequestResponse({
+    description: 'Returned when validation fails.',
+  })
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise<ProductResponse> {
+    return await this.productsService.updateOne(id, updateProductDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Deletes a Product resource.',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Product ID',
+    type: 'number',
+  })
+  @ApiOkResponse({
+    description: 'Returned when the product was deleted successfully.',
+    schema: {
+      $ref: getSchemaPath(GenericOperationResponse),
+    },
+  })
+  @ApiNotFoundResponse({
+    description: 'Returned when the product was not found.',
+  })
+  async delete(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<GenericOperationResponse> {
+    return await this.productsService.deleteOne(id);
   }
 }
