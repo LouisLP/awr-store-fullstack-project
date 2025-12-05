@@ -19,8 +19,21 @@ export const useCartStore = defineStore('cart', () => {
 
   const isEmpty = computed(() => items.value.length === 0)
 
-  // Actions
-  function addToCart(product: Product, quantity = 1) {
+  const getQuantityInCart = (productId: number): number => {
+    const item = items.value.find(item => item.product.id === productId)
+    return item ? item.quantity : 0
+  }
+
+  const canAddToCart = (product: Product, additionalQuantity = 1): boolean => {
+    const currentQuantityInCart = getQuantityInCart(product.id)
+    return (currentQuantityInCart + additionalQuantity) <= product.availableCount
+  }
+
+  function addToCart(product: Product, quantity = 1): boolean {
+    if (!canAddToCart(product, quantity)) {
+      return false // Can't add more
+    }
+
     const existingItem = items.value.find(item => item.product.id === product.id)
 
     if (existingItem) {
@@ -29,28 +42,30 @@ export const useCartStore = defineStore('cart', () => {
     else {
       items.value.push({ product, quantity })
     }
+
+    return true
   }
 
-  function removeFromCart(productId: number) {
+  function removeFromCart(productId: number): void {
     const index = items.value.findIndex(item => item.product.id === productId)
     if (index > -1) {
       items.value.splice(index, 1)
     }
   }
 
-  function updateQuantity(productId: number, quantity: number) {
+  function updateQuantity(productId: number, quantity: number): void {
     if (quantity <= 0) {
       removeFromCart(productId)
       return
     }
 
     const item = items.value.find(item => item.product.id === productId)
-    if (item) {
+    if (item && quantity <= item.product.availableCount) {
       item.quantity = quantity
     }
   }
 
-  function clearCart() {
+  function clearCart(): void {
     items.value = []
   }
 
@@ -61,6 +76,9 @@ export const useCartStore = defineStore('cart', () => {
     cartCount,
     cartTotal,
     isEmpty,
+    // Helpers
+    getQuantityInCart,
+    canAddToCart,
     // Actions
     addToCart,
     removeFromCart,
