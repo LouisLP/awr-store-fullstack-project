@@ -14,8 +14,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8 mt-12">
-    <div class="flex justify-between items-center mb-8">
+  <div class="container mx-auto mt-12 px-4 py-8">
+    <div class="mb-8 flex items-center justify-between">
       <h1 class="text-4xl font-bold">
         Admin Dashboard
       </h1>

@@ -16,7 +16,7 @@ const emit = defineEmits<{
 <template>
   <div class="card bg-black/30 shadow-md">
     <div class="card-body">
-      <div class="flex justify-between items-start">
+      <div class="flex items-start justify-between">
         <div class="flex-1">
           <h2 class="card-title text-lg">
             {{ item.product.name }}
@@ -32,12 +32,12 @@ const emit = defineEmits<{
         </button>
       </div>
 
-      <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
         <div>
-          <div class="text-xl font-bold text-primary">
+          <div class="text-primary text-xl font-bold">
             €{{ item.product.price.toFixed(2) }}
           </div>
-          <div class="text-xs text-base-content/60">
+          <div class="text-base-content/60 text-xs">
             /item
           </div>
         </div>
@@ -52,7 +52,7 @@ const emit = defineEmits<{
             <Icon icon="mdi:minus" class="size-4" />
           </button>
 
-          <div class="badge badge-neutral font-bold px-3 select-none">
+          <div class="badge badge-neutral px-3 font-bold select-none">
             {{ item.quantity }}
           </div>
 
@@ -67,9 +67,9 @@ const emit = defineEmits<{
       </div>
 
       <!-- Item total -->
-      <div class="flex justify-between items-center mt-4 pt-4 border-t border-base-content/10">
-        <span class="text-sm text-base-content/70">Item total:</span>
-        <div class="text-xl font-bold text-primary">
+      <div class="border-base-content/10 mt-4 flex items-center justify-between border-t pt-4">
+        <span class="text-base-content/70 text-sm">Item total:</span>
+        <div class="text-primary text-xl font-bold">
           €{{ (item.product.price * item.quantity).toFixed(2) }}
         </div>
       </div>

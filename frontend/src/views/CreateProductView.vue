@@ -38,9 +38,9 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="container mx-auto px-4 py-8 mt-12">
-    <div class="max-w-2xl mx-auto">
-      <h1 class="text-4xl font-bold mb-8">
+  <div class="container mx-auto mt-12 px-4 py-8">
+    <div class="mx-auto max-w-2xl">
+      <h1 class="mb-8 text-4xl font-bold">
         Create New Product
       </h1>
 
@@ -51,8 +51,8 @@ const onSubmit = handleSubmit(async (values) => {
       <form class="card bg-black/30" @submit="onSubmit">
         <div class="card-body space-y-4">
           <!-- Fieldset (thanks DaisyUI) -->
-          <fieldset class="fieldset border border-secondary rounded-box p-6 space-y-6">
-            <legend class="font-bold text-lg">
+          <fieldset class="fieldset border-secondary rounded-box space-y-6 border p-6">
+            <legend class="text-lg font-bold">
               Product Details
             </legend>
 
@@ -77,7 +77,7 @@ const onSubmit = handleSubmit(async (values) => {
                 v-model="description"
                 v-bind="descriptionAttrs"
                 placeholder="Enter product description"
-                class="textarea textarea-bordered w-full h-24"
+                class="textarea textarea-bordered h-24 w-full"
                 :class="{ 'textarea-error': errors.description }"
               />
               <span v-if="errors.description" class="text-error text-sm">{{ errors.description }}</span>

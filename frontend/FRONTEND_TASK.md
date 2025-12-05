@@ -25,6 +25,7 @@ This take-home project is designed to evaluate your frontend engineering skills 
 - Clean, maintainable code
 
 ### Focus on the Required Stages:
+
 The core task involves completing the first two stages:
 
 1. Products CRUD (Required)
@@ -73,8 +74,8 @@ Ensure your submission includes:
 1. A clear `README.md` with setup instructions.
 2. All source code required to run the application.
 
-
 ### What We’re Looking For
+
 - Clean, modular components
 - Effective state management (especially for the cart)
 - Robust loading and error handling (what happens if an API call fails?)
@@ -137,54 +138,57 @@ You must implement a client-side shopping cart and checkout flow.
 
 1. Local Shopping Cart
 
-  - Requirement: Since the BE does not have a "Cart" endpoint, you must implement a client-side shopping cart.
-  - Use local state management (e.g., React Context, Redux) to store the items a user adds.
-  - The "Add to Cart" button from Stage 1 should add the product `id` and `quantity` to this state.
-  - Create a "Cart" component (e.g., a modal, a sidebar, or a separate `/cart` page) that shows all items, their quantities, and a total price.
+- Requirement: Since the BE does not have a "Cart" endpoint, you must implement a client-side shopping cart.
+- Use local state management (e.g., React Context, Redux) to store the items a user adds.
+- The "Add to Cart" button from Stage 1 should add the product `id` and `quantity` to this state.
+- Create a "Cart" component (e.g., a modal, a sidebar, or a separate `/cart` page) that shows all items, their quantities, and a total price.
 
 2. Order Placement
 
-  - Endpoint: Consumes `POST /orders`.
-  - Requirement: The Cart component must have a "Place Order" button.
-  - When clicked, you must format the cart's state into the JSON payload shape required by the backend:
+- Endpoint: Consumes `POST /orders`.
+- Requirement: The Cart component must have a "Place Order" button.
+- When clicked, you must format the cart's state into the JSON payload shape required by the backend:
 
-  ```json
-  {
-      "customerId": "7545afc6-c1eb-497a-9a44-4e6ba595b4ab", // Can be hard-coded
-      "products": [
-        { "id": 1, "quantity": 1 },
-        { "id": 12, "quantity": 4 }
-      ]
-    }
-  ```
-  - Handle loading states and any potential errors from the API (e.g., "Out of Stock").
+```json
+{
+  "customerId": "7545afc6-c1eb-497a-9a44-4e6ba595b4ab", // Can be hard-coded
+  "products": [
+    { "id": 1, "quantity": 1 },
+    { "id": 12, "quantity": 4 }
+  ]
+}
+```
+
+- Handle loading states and any potential errors from the API (e.g., "Out of Stock").
 
 3. Order Confirmation Page
-  - Endpoint: Consumes `GET /orders/:id`.
-  - Requirement: After a `POST /orders` request is successful, the backend will return the new order.
-  - You must redirect the user to a dynamic "Order Confirmation" page (e.g., `/orders/{id}`).
-  - This page must then fetch the order details from `GET /orders/:id` and display them to the user, matching the response shape:
 
-  ```json
-  {
-    "id": "f539f7a2-556d-4f22-9138-6065488709c2",
-    "customerId": "7545afc6-c1eb-497a-9a44-4e6ba595b4ab",
-    "orderCreatedDate": "2025-04-17T23:50:00.268Z",
-    "orderUpdatedDate": "2025-04-17T23:50:00.268Z",
-    "status": "DISPATCHED",
-    "orderTotal": 123.45,
-    "products": [
-      { "id": 1, "quantity": 12, "name": "Product 1" },
-      { "id": 4, "quantity": 2, "name": "Product 4" }
-    ]
-  }
-  ```
+- Endpoint: Consumes `GET /orders/:id`.
+- Requirement: After a `POST /orders` request is successful, the backend will return the new order.
+- You must redirect the user to a dynamic "Order Confirmation" page (e.g., `/orders/{id}`).
+- This page must then fetch the order details from `GET /orders/:id` and display them to the user, matching the response shape:
+
+```json
+{
+  "id": "f539f7a2-556d-4f22-9138-6065488709c2",
+  "customerId": "7545afc6-c1eb-497a-9a44-4e6ba595b4ab",
+  "orderCreatedDate": "2025-04-17T23:50:00.268Z",
+  "orderUpdatedDate": "2025-04-17T23:50:00.268Z",
+  "status": "DISPATCHED",
+  "orderTotal": 123.45,
+  "products": [
+    { "id": 1, "quantity": 12, "name": "Product 1" },
+    { "id": 4, "quantity": 2, "name": "Product 4" }
+  ]
+}
+```
 
 #### Notes on order placement:
 
 In the database, be sure to also record the order creation date and order last updated date. Both of these timestamp values can be set to the time that the order was placed. Additionally, the order total should be computed and stored in the table.
 
 A user may also retrieve the details of a successfully placed order by performing a `GET` request to `orders/{id}` where `{id}` is the unique order identifier. The response shape of this endpoint should look something like the following:
+
 ```json
 {
   "id": "f539f7a2-556d-4f22-9138-6065488709c2",

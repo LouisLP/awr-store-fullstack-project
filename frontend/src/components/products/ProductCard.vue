@@ -35,21 +35,21 @@ const isButtonDisabled = computed(() => isOutOfStock.value || isMaxedOut.value)
 </script>
 
 <template>
-  <div class="card bg-black/30 shadow-xl hover:shadow-2xl hover:ring-2 ring-secondary transition-all">
+  <div class="card ring-secondary bg-black/30 shadow-xl transition-all hover:shadow-2xl hover:ring-2">
     <div class="card-body">
       <h2 class="card-title">
         {{ product.name }}
       </h2>
-      <p class="text-sm text-base-content/70 line-clamp-2">
+      <p class="text-base-content/70 line-clamp-2 text-sm">
         {{ product.description }}
       </p>
 
-      <div class="flex justify-between items-center mt-4">
+      <div class="mt-4 flex items-center justify-between">
         <div>
-          <div class="text-2xl font-bold text-primary">
+          <div class="text-primary text-2xl font-bold">
             €{{ product.price.toFixed(2) }}
           </div>
-          <div class="text-xs text-base-content/60">
+          <div class="text-base-content/60 text-xs">
             <span
               class="badge"
               :class="product.availableCount > 0 ? 'badge-secondary' : 'badge-error'"
@@ -60,7 +60,7 @@ const isButtonDisabled = computed(() => isOutOfStock.value || isMaxedOut.value)
         </div>
       </div>
 
-      <div class="card-actions justify-end mt-4">
+      <div class="card-actions mt-4 justify-end">
         <button
           class="btn w-full"
           :class="{
