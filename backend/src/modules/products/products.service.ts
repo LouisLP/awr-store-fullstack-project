@@ -1,12 +1,12 @@
-/** biome-ignore-all lint/style/useImportType: <explanation> */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
-import { Product } from 'src/common/generated/prisma-client';
-import { CreateProductDto } from './products.schema';
+import type { Product } from 'src/common/generated/prisma-client';
+import { CreateProductDto, UpdateProductDto } from './products.schema';
+import type { GenericOperationResponse } from 'src/common/schemas/generic-operation-response.schema';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const created = await this.prisma.product.create({
@@ -23,18 +23,38 @@ export class ProductsService {
     });
   }
 
-  // May be implemented
-  // @ts-ignore
-  async findOne(): Promise<Product> {}
+  async findOne(id: number): Promise<Product> {
+    const product = await this.prisma.product.findUnique({
+      where: { id },
+    });
 
-  // May be implemented
-  // @ts-ignore
-  async updateOne(): Promise<Product> {}
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
 
-  // May be implemented.
-  // Note: This operation returns a promise of GenericOperationResponse
-  // which contains a flag that denotes whether or not the operation
-  // was successful.
-  //@ts-ignore
-  async deleteOne(): Promise<GenericOperationResponse> {}
+    return product;
+  }
+
+  async updateOne(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+    await this.findOne(id);
+
+    const updated = await this.prisma.product.update({
+      where: { id },
+      data: updateProductDto,
+    });
+
+    return updated;
+  }
+
+  async deleteOne(id: number): Promise<GenericOperationResponse> {
+    await this.findOne(id);
+
+    await this.prisma.product.delete({
+      where: { id },
+    });
+
+    return {
+      success: true,
+    };
+  }
 }
