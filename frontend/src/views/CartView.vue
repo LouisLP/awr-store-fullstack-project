@@ -111,7 +111,7 @@ async function handleCheckout() {
           <div class="card-actions justify-end mt-6">
             <button class="btn btn-neutral btn-lg w-full" @click="handleCheckout()">
               <Icon icon="mdi:credit-card" class="size-5" />
-              Proceed to Checkout
+              Place Order
             </button>
           </div>
         </div>
