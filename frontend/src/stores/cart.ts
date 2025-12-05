@@ -5,10 +5,8 @@ import type { CartItem } from '@/types/cart'
 import type { Product } from '@/types/product'
 
 export const useCartStore = defineStore('cart', () => {
-  // State
   const items = ref<CartItem[]>([])
 
-  // Getters
   const cartCount = computed(() =>
     items.value.reduce((sum, item) => sum + item.quantity, 0),
   )
