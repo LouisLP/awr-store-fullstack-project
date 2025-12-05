@@ -8,7 +8,7 @@ export const OrderProductSchema = z.object({
 export type OrderProduct = z.infer<typeof OrderProductSchema>
 
 export const CreateOrderSchema = z.object({
-  customerId: z.uuid(),
+  customerId: z.string().uuid(),
   products: z.array(OrderProductSchema).min(1),
 })
 
@@ -23,8 +23,8 @@ export const OrderProductDetailSchema = z.object({
 export type OrderProductDetail = z.infer<typeof OrderProductDetailSchema>
 
 export const OrderResponseSchema = z.object({
-  id: z.uuid(),
-  customerId: z.uuid(),
+  id: z.string().uuid(),
+  customerId: z.string().uuid(),
   orderCreatedDate: z.string(),
   orderUpdatedDate: z.string(),
   status: z.string(),

@@ -1,12 +1,13 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import AdminDashboard from '@/views/AdminDashboard.vue'
+import CartView from '@/views/CartView.vue'
 import CreateProductView from '@/views/CreateProductView.vue'
-// import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
+import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
 import ShopView from '@/views/ShopView.vue'
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -23,11 +24,16 @@ const router = createRouter({
       name: 'create-product',
       component: CreateProductView,
     },
-    // {
-    //   path: '/orders/:id',
-    //   name: 'order-confirmation',
-    //   component: OrderConfirmationView,
-    // },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
+    },
+    {
+      path: '/orders/:id',
+      name: 'order-confirmation',
+      component: OrderConfirmationView,
+    },
   ],
 })
 

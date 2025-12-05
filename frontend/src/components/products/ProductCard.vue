@@ -1,15 +1,37 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { computed } from 'vue'
 
 import type { Product } from '@/types/product'
 
-defineProps<{
+import { useCartStore } from '@/stores/cart'
+
+const props = defineProps<{
   product: Product
 }>()
 
 const emit = defineEmits<{
   addToCart: []
 }>()
+
+const cartStore = useCartStore()
+
+const quantityInCart = computed(() => cartStore.getQuantityInCart(props.product.id))
+const canAddMore = computed(() => cartStore.canAddToCart(props.product))
+const isOutOfStock = computed(() => props.product.availableCount === 0)
+const isMaxedOut = computed(() => quantityInCart.value >= props.product.availableCount)
+
+const buttonText = computed(() => {
+  if (isOutOfStock.value)
+    return 'Out of Stock'
+  if (isMaxedOut.value)
+    return 'Max in Cart'
+  if (quantityInCart.value > 0)
+    return `Add More (${quantityInCart.value} in cart)`
+  return 'Add to Cart'
+})
+
+const isButtonDisabled = computed(() => isOutOfStock.value || isMaxedOut.value)
 </script>
 
 <template>
@@ -40,13 +62,26 @@ const emit = defineEmits<{
 
       <div class="card-actions justify-end mt-4">
         <button
-          class="btn btn-neutral w-full"
-          :disabled="product.availableCount === 0"
+          class="btn w-full"
+          :class="{
+            'btn-neutral': canAddMore,
+            'btn-disabled': isButtonDisabled,
+            'btn-accent': quantityInCart > 0 && canAddMore,
+          }"
+          :disabled="isButtonDisabled"
           @click="emit('addToCart')"
         >
-          <Icon v-if="product.availableCount > 0" icon="mdi:plus" class="size-4 text-white" />
-          <Icon v-else icon="mdi:close" class="size-4 text-white" />
-          {{ product.availableCount > 0 ? 'Add to Cart' : 'Out of Stock' }}
+          <Icon
+            v-if="canAddMore"
+            icon="mdi:plus"
+            class="size-4 text-white"
+          />
+          <Icon
+            v-else-if="isMaxedOut"
+            icon="mdi:close"
+            class="size-4"
+          />
+          {{ buttonText }}
         </button>
       </div>
     </div>
