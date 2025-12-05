@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import type { Product } from 'src/common/generated/prisma-client';
 import { CreateProductDto, UpdateProductDto, ProductResponse } from './products.schema';
@@ -65,6 +65,18 @@ export class ProductsService {
 
   async deleteOne(id: number): Promise<GenericOperationResponse> {
     await this.findOne(id);
+
+    // Check if product is referenced in any orders
+    const orderItemCount = await this.prisma.orderItem.count({
+      where: { productId: id },
+    });
+
+    if (orderItemCount > 0) {
+      throw new BadRequestException(
+        `Cannot delete product with ID ${id} because it has been ordered ${orderItemCount} time(s). ` +
+        `Products that have been ordered cannot be deleted to maintain order history.`
+      );
+    }
 
     await this.prisma.product.delete({
       where: { id },
