@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import AdminDashboard from '@/views/AdminDashboard.vue'
 import CartView from '@/views/CartView.vue'
@@ -7,7 +7,7 @@ import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
 import ShopView from '@/views/ShopView.vue'
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
