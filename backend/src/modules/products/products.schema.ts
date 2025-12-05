@@ -28,4 +28,9 @@ export const CreateProductSchema = BaseProductSchema.pick({
   price: true,
   availableCount: true,
 });
+
 export class CreateProductDto extends createZodDto(CreateProductSchema) {}
+
+export const UpdateProductSchema = CreateProductSchema.partial();
+
+export class UpdateProductDto extends createZodDto(UpdateProductSchema) {}
