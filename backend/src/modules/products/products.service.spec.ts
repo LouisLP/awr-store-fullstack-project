@@ -37,10 +37,20 @@ describe('Product Service Unit Tests', () => {
       });
 
       const result = await productService.create(createdProductData);
+
       expect(prismaService.product.create).toHaveBeenCalledWith({
         data: createdProductData,
       });
-      expect(result).toEqual(expect.objectContaining(createdProductData));
+
+      expect(result).toEqual({
+        id: 1,
+        name: 'Mesmerizer 3000',
+        description: 'An antique mesmerizer designed to captivate audiences.',
+        price: new Prisma.Decimal('199.99'),
+        availableCount: 12,
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
+      });
     });
   });
 

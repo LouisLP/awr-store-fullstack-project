@@ -21,23 +21,41 @@ describe('Products Controller Unit Tests', () => {
   });
 
   describe('create', () => {
-    it('should create a new product', async () => {
+    it('should create a new product and return transformed response', async () => {
       const createProductDto: CreateProductDto = {
         name: 'Foo Bar',
         description: 'The fooest of bars',
         price: 1.23,
         availableCount: 123,
       };
-      productsService.create = jest.fn();
 
-      await productsController.create(createProductDto);
+      const mockServiceResponse = {
+        id: 1,
+        ...createProductDto,
+        price: new Prisma.Decimal(createProductDto.price),
+        createdAt: new Date('2026-01-01T10:00:00Z'),
+        updatedAt: new Date('2026-01-01T10:00:00Z'),
+      };
+
+      productsService.create.mockResolvedValue(mockServiceResponse);
+
+      const result = await productsController.create(createProductDto);
+
       expect(productsService.create).toHaveBeenCalledWith(createProductDto);
+
+
+      expect(result).toEqual({
+        id: 1,
+        name: 'Foo Bar',
+        description: 'The fooest of bars',
+        price: 1.23,
+        availableCount: 123,
+        createdAt: new Date('2026-01-01T10:00:00Z'),
+        updatedAt: new Date('2026-01-01T10:00:00Z'),
+      });
     });
   });
 
-  // Note: The following test cases can be completed at your convenience.
-  // Furthermore, any additional tests for covering edge cases or to increase
-  // code coverage is left up to your discretion.
   describe('findAll', () => {
     it('should return all products with transformed responses', async () => {
       const mockProducts = [
@@ -68,11 +86,19 @@ describe('Products Controller Unit Tests', () => {
       expect(productsService.findMany).toHaveBeenCalled();
       expect(result).toHaveLength(2);
       expect(result[0].price).toBe(99.99); // Converted to number
-      expect(result[0].createdAt).toBe('2026-01-01T10:00:00.000Z'); // Converted to string
+      expect(result[0].createdAt).toEqual(new Date('2026-01-01T10:00:00Z'));
     });
   });
 
-  describe('findOne', async () => { });
-  describe('update', async () => { });
-  describe('delete', async () => { });
+  describe('findOne', () => {
+    // Add tests here when you implement findOne
+  });
+
+  describe('update', () => {
+    // Add tests here when you implement update
+  });
+
+  describe('delete', () => {
+    // Add tests here when you implement delete
+  });
 });
