@@ -32,7 +32,6 @@ describe('Products Controller Unit Tests', () => {
       const mockServiceResponse = {
         id: 1,
         ...createProductDto,
-        price: new Prisma.Decimal(createProductDto.price),
         createdAt: new Date('2026-01-01T10:00:00Z'),
         updatedAt: new Date('2026-01-01T10:00:00Z'),
       };
@@ -42,17 +41,7 @@ describe('Products Controller Unit Tests', () => {
       const result = await productsController.create(createProductDto);
 
       expect(productsService.create).toHaveBeenCalledWith(createProductDto);
-
-
-      expect(result).toEqual({
-        id: 1,
-        name: 'Foo Bar',
-        description: 'The fooest of bars',
-        price: 1.23,
-        availableCount: 123,
-        createdAt: new Date('2026-01-01T10:00:00Z'),
-        updatedAt: new Date('2026-01-01T10:00:00Z'),
-      });
+      expect(result).toEqual(mockServiceResponse);
     });
   });
 
@@ -63,7 +52,7 @@ describe('Products Controller Unit Tests', () => {
           id: 1,
           name: 'Product 1',
           description: 'Description 1',
-          price: new Prisma.Decimal('99.99'),
+          price: 99.99,
           availableCount: 10,
           createdAt: new Date('2026-01-01T10:00:00Z'),
           updatedAt: new Date('2026-01-01T10:00:00Z'),
@@ -72,7 +61,7 @@ describe('Products Controller Unit Tests', () => {
           id: 2,
           name: 'Product 2',
           description: 'Description 2',
-          price: new Prisma.Decimal('149.99'),
+          price: 149.99,
           availableCount: 5,
           createdAt: new Date('2026-01-02T10:00:00Z'),
           updatedAt: new Date('2026-01-02T10:00:00Z'),
@@ -85,20 +74,67 @@ describe('Products Controller Unit Tests', () => {
 
       expect(productsService.findMany).toHaveBeenCalled();
       expect(result).toHaveLength(2);
-      expect(result[0].price).toBe(99.99); // Converted to number
-      expect(result[0].createdAt).toEqual(new Date('2026-01-01T10:00:00Z'));
+      expect(result).toEqual(mockProducts);
     });
   });
 
   describe('findOne', () => {
-    // Add tests here when you implement findOne
+    it('should return a single product by id', async () => {
+      const mockProduct = {
+        id: 1,
+        name: 'Product 1',
+        description: 'Description 1',
+        price: 99.99,
+        availableCount: 10,
+        createdAt: new Date('2026-01-01T10:00:00Z'),
+        updatedAt: new Date('2026-01-01T10:00:00Z'),
+      };
+
+      productsService.findOne.mockResolvedValue(mockProduct);
+
+      const result = await productsController.findOne(1);
+
+      expect(productsService.findOne).toHaveBeenCalledWith(1);
+      expect(result).toEqual(mockProduct);
+    });
   });
 
   describe('update', () => {
-    // Add tests here when you implement update
+    it('should update a product and return the updated product', async () => {
+      const updateProductDto = {
+        name: 'Updated Product',
+        price: 199.99,
+      };
+
+      const mockUpdatedProduct = {
+        id: 1,
+        name: 'Updated Product',
+        description: 'Original description',
+        price: 199.99,
+        availableCount: 10,
+        createdAt: new Date('2026-01-01T10:00:00Z'),
+        updatedAt: new Date('2026-01-02T10:00:00Z'),
+      };
+
+      productsService.updateOne.mockResolvedValue(mockUpdatedProduct);
+
+      const result = await productsController.update(1, updateProductDto);
+
+      expect(productsService.updateOne).toHaveBeenCalledWith(1, updateProductDto);
+      expect(result).toEqual(mockUpdatedProduct);
+    });
   });
 
   describe('delete', () => {
-    // Add tests here when you implement delete
+    it('should delete a product and return success response', async () => {
+      const mockResponse = { success: true };
+
+      productsService.deleteOne.mockResolvedValue(mockResponse);
+
+      const result = await productsController.delete(1);
+
+      expect(productsService.deleteOne).toHaveBeenCalledWith(1);
+      expect(result).toEqual(mockResponse);
+    });
   });
 });
