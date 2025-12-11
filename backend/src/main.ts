@@ -23,6 +23,7 @@ async function bootstrap() {
   // CORS for soon-to-be frontend
   app.enableCors({
     origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
 

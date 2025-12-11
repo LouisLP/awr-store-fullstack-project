@@ -2,15 +2,33 @@
 import { Icon } from '@iconify/vue'
 import { onMounted } from 'vue'
 
+import type { Product } from '@/types/product'
+
 import ProductTable from '@/components/products/ProductTable.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import { useProducts } from '@/composables/useProducts'
 
-const { products, loading, error, fetchProducts } = useProducts()
+const { products, loading, error, fetchProducts, deleteProduct } = useProducts()
 
 onMounted(() => {
   fetchProducts()
 })
+
+async function handleDelete(id: number) {
+  try {
+    await deleteProduct(id)
+  }
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  catch (e) {
+    // Error handled in the composable
+  }
+}
+
+function handleEdit(product: Product) {
+  // TODO: make a modal or route for editing
+  // eslint-disable-next-line no-console
+  console.info('Edit product', product)
+}
 </script>
 
 <template>
@@ -42,7 +60,11 @@ onMounted(() => {
     <!-- Products Table -->
     <div v-else-if="products.length > 0" class="card bg-base-100 shadow-xl">
       <div class="card-body p-0">
-        <ProductTable :products="products" />
+        <ProductTable
+          :products="products"
+          @edit="handleEdit"
+          @delete="handleDelete"
+        />
       </div>
     </div>
 
